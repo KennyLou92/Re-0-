@@ -3,18 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Re-0模擬抽卡機（加倍）tle>
+    <title>Re0 抽卡機（加倍）</title>
     <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid black; padding: 5px; text-align: center; }
+        body { font-family: Arial, sans-serif; text-align: center; }
+        table { border-collapse: collapse; width: 80%; margin: 20px auto; }
+        th, td { border: 1px solid black; padding: 8px; text-align: center; }
         .highlight { background-color: yellow; }
+        img { width: 50px; height: 50px; }
+        .input-container { margin-bottom: 20px; }
+        .input-container label { margin-right: 10px; }
+        button { padding: 10px 20px; cursor: pointer; }
     </style>
 </head>
 <body>
     <h2>Draw Simulation Rate Up</h2>
-    <label>Number of Players: <input type="number" id="numPlayers" value="1"></label>
-    <label>Number of Draws: <input type="number" id="numDraws" value="35"></label>
-    <button onclick="runDrawSimulation()">Run Simulation</button>
+    <div class="input-container">
+        <label>Number of Players: <input type="number" id="numPlayers" value="1" min="1"></label>
+        <label>Number of Draws: <input type="number" id="numDraws" value="35" min="1"></label>
+        <button onclick="runDrawSimulation()">Run Simulation</button>
+    </div>
     <table id="results"></table>
     
     <script>
@@ -48,10 +55,11 @@
                     }
                 }
                 
-                let row = resultsTable.insertRow();
-                let cell = row.insertCell();
-                cell.textContent = `Player ${p}`;
-                cell.colSpan = 10;
+                let headerRow = resultsTable.insertRow();
+                let headerCell = headerRow.insertCell();
+                headerCell.textContent = `Player ${p}`;
+                headerCell.colSpan = 10;
+                headerCell.style.fontWeight = "bold";
                 
                 for (let i = 0; i < draws.length; i += 10) {
                     let row = resultsTable.insertRow();
@@ -61,10 +69,10 @@
                         if (id) {
                             let img = document.createElement("img");
                             img.src = `https://d1h5mn9kk900cf.cloudfront.net/toswebsites/gallery/icons/${id}.jpg`;
-                            img.width = 50;
-                            img.height = 50;
                             cell.appendChild(img);
                             if (id === 10857) cell.classList.add("highlight");
+                        } else {
+                            cell.textContent = "";
                         }
                     }
                 }
